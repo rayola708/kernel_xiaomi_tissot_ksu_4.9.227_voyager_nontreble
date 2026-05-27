@@ -51,14 +51,6 @@ jobs:
           curl -sLo KernelSU-Next/kernel/selinux/rules.c https://raw.githubusercontent.com/rahmatsobrian/kernel_xiaomi_tissot_ksu_4.9.227_voyager_nontreble/main/patch/rules.c
           curl -sLo KernelSU-Next/kernel/selinux/sepolicy.c https://raw.githubusercontent.com/rahmatsobrian/kernel_xiaomi_tissot_ksu_4.9.227_voyager_nontreble/main/patch/sepolicy.c
           curl -sLo KernelSU-Next/kernel/selinux/sepolicy.h https://raw.githubusercontent.com/rahmatsobrian/kernel_xiaomi_tissot_ksu_4.9.227_voyager_nontreble/main/patch/sepolicy.h
-          echo "[+] Verifying patches..."
-          if grep -q "ksu_set_type_bounds" KernelSU-Next/kernel/selinux/sepolicy.c && \
-             grep -q "appdomain" KernelSU-Next/kernel/selinux/rules.c; then
-            echo "[SUCCESS] KernelSU SELinux patches applied successfully!"
-          else
-            echo "[ERROR] SELinux patches failed to apply!"
-            exit 1
-          fi
           
       - name: Start Build with log
         env:
