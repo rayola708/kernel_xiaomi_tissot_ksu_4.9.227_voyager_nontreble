@@ -96,6 +96,7 @@ static int apply_kernelsu_rules_fn(void *ptr)
 	struct policydb *db = (struct policydb *)ptr;
 
     ksu_type(db, KERNEL_SU_DOMAIN, "domain");
+    ksu_set_type_bounds(db, KERNEL_SU_DOMAIN, "init");
     ksu_permissive(db, KERNEL_SU_DOMAIN);
     ksu_typeattribute(db, KERNEL_SU_DOMAIN, "mlstrustedsubject");
     ksu_typeattribute(db, KERNEL_SU_DOMAIN, "netdomain");
@@ -142,14 +143,6 @@ static int apply_kernelsu_rules_fn(void *ptr)
     ksu_allow(db, "init", "adb_data_file", "file", ALL);
     ksu_allow(db, "init", "adb_data_file", "dir", ALL); // #1289
     ksu_allow(db, "init", KERNEL_SU_DOMAIN, ALL, ALL);
-    // Fix: allow init -> ksu domain transition (security_bounded_transition)
-    ksu_allow(db, "init", KERNEL_SU_DOMAIN, "process", "transition");
-    ksu_allow(db, "init", KERNEL_SU_DOMAIN, "process", "dyntransition");
-    ksu_allow(db, "init", KERNEL_SU_DOMAIN, "process", "noatsecure");
-    ksu_allow(db, "init", KERNEL_SU_DOMAIN, "process", "siginh");
-    ksu_allow(db, "init", KERNEL_SU_DOMAIN, "process", "rlimitinh");
-    ksu_allow(db, KERNEL_SU_DOMAIN, KERNEL_SU_FILE, "file", "entrypoint");
-    ksu_type_transition(db, "init", KERNEL_SU_FILE, "process", KERNEL_SU_DOMAIN, NULL);
     // we need to umount modules in zygote
     ksu_allow(db, "zygote", "adb_data_file", "dir", "search");
 
@@ -191,6 +184,23 @@ static int apply_kernelsu_rules_fn(void *ptr)
     // Allow system server kill su process
     ksu_allow(db, "system_server", KERNEL_SU_DOMAIN, "process", "getpgid");
     ksu_allow(db, "system_server", KERNEL_SU_DOMAIN, "process", "sigkill");
+
+    // Additional rules for Android 10+ and Treble
+    ksu_allow(db, "appdomain", "kernel", "system", "reboot");
+    ksu_allow(db, "appdomain", KERNEL_SU_DOMAIN, "unix_stream_socket", ALL);
+    ksu_allow(db, "appdomain", KERNEL_SU_DOMAIN, "dir", ALL);
+    ksu_allow(db, "appdomain", KERNEL_SU_DOMAIN, "file", ALL);
+    ksu_allow(db, "appdomain", KERNEL_SU_DOMAIN, "fifo_file", ALL);
+    ksu_allow(db, "appdomain", KERNEL_SU_DOMAIN, "binder", ALL);
+    ksu_allow(db, "appdomain", KERNEL_SU_DOMAIN, "process", ALL);
+
+    ksu_allow(db, "untrusted_app_all", "kernel", "system", "reboot");
+    ksu_allow(db, "untrusted_app_all", KERNEL_SU_DOMAIN, "unix_stream_socket", ALL);
+    ksu_allow(db, "untrusted_app_all", KERNEL_SU_DOMAIN, "dir", ALL);
+    ksu_allow(db, "untrusted_app_all", KERNEL_SU_DOMAIN, "file", ALL);
+    ksu_allow(db, "untrusted_app_all", KERNEL_SU_DOMAIN, "fifo_file", ALL);
+    ksu_allow(db, "untrusted_app_all", KERNEL_SU_DOMAIN, "binder", ALL);
+    ksu_allow(db, "untrusted_app_all", KERNEL_SU_DOMAIN, "process", ALL);
 
     return 0;
 }
