@@ -925,17 +925,6 @@ static bool add_typeattribute(struct policydb *db, const char *type,
 //////////////////////////////////////////////////////////////////////////
 
 // Operation on types
-bool ksu_set_type_bounds(struct policydb *db, const char *type_name, const char *bounds_name)
-{
-    struct type_datum *type = symtab_search(&db->p_types, type_name);
-    struct type_datum *bounds = symtab_search(&db->p_types, bounds_name);
-    if (!type || !bounds) {
-        return false;
-    }
-    type->bounds = bounds->value;
-    return true;
-}
-
 bool ksu_type(struct policydb *db, const char *name, const char *attr)
 {
     return add_type(db, name, false) && add_typeattribute(db, name, attr);

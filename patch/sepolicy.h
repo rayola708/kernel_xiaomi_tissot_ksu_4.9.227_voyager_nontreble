@@ -6,7 +6,6 @@
 #include "ss/policydb.h"
 
 // Operation on types
-bool ksu_set_type_bounds(struct policydb *db, const char *type_name, const char *bounds_name);
 bool ksu_type(struct policydb *db, const char *name, const char *attr);
 bool ksu_attribute(struct policydb *db, const char *name);
 bool ksu_permissive(struct policydb *db, const char *type);

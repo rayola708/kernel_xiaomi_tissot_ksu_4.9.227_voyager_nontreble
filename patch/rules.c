@@ -96,7 +96,6 @@ static int apply_kernelsu_rules_fn(void *ptr)
 	struct policydb *db = (struct policydb *)ptr;
 
     ksu_type(db, KERNEL_SU_DOMAIN, "domain");
-    ksu_set_type_bounds(db, KERNEL_SU_DOMAIN, "init");
     ksu_permissive(db, KERNEL_SU_DOMAIN);
     ksu_typeattribute(db, KERNEL_SU_DOMAIN, "mlstrustedsubject");
     ksu_typeattribute(db, KERNEL_SU_DOMAIN, "netdomain");
@@ -186,7 +185,6 @@ static int apply_kernelsu_rules_fn(void *ptr)
     ksu_allow(db, "system_server", KERNEL_SU_DOMAIN, "process", "sigkill");
 
     // Additional rules for Android 10+ and Treble
-    ksu_allow(db, "appdomain", "kernel", "system", "reboot");
     ksu_allow(db, "appdomain", KERNEL_SU_DOMAIN, "unix_stream_socket", ALL);
     ksu_allow(db, "appdomain", KERNEL_SU_DOMAIN, "dir", ALL);
     ksu_allow(db, "appdomain", KERNEL_SU_DOMAIN, "file", ALL);
@@ -194,7 +192,6 @@ static int apply_kernelsu_rules_fn(void *ptr)
     ksu_allow(db, "appdomain", KERNEL_SU_DOMAIN, "binder", ALL);
     ksu_allow(db, "appdomain", KERNEL_SU_DOMAIN, "process", ALL);
 
-    ksu_allow(db, "untrusted_app_all", "kernel", "system", "reboot");
     ksu_allow(db, "untrusted_app_all", KERNEL_SU_DOMAIN, "unix_stream_socket", ALL);
     ksu_allow(db, "untrusted_app_all", KERNEL_SU_DOMAIN, "dir", ALL);
     ksu_allow(db, "untrusted_app_all", KERNEL_SU_DOMAIN, "file", ALL);
