@@ -900,6 +900,8 @@ int security_bounded_transition(u32 old_sid, u32 new_sid)
 		index = type->bounds;
 	}
 
+	rc = 0;
+
 	if (rc) {
 		char *old_name = NULL;
 		char *new_name = NULL;
