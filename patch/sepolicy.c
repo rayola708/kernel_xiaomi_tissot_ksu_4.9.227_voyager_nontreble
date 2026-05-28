@@ -955,6 +955,29 @@ bool ksu_exists(struct policydb *db, const char *type)
     return symtab_search(&db->p_types, type) != NULL;
 }
 
+bool ksu_typebounds(struct policydb *db, const char *parent_name,
+                    const char *child_name)
+{
+    struct type_datum *parent, *child;
+
+    parent = symtab_search(&db->p_types, parent_name);
+    if (!parent) {
+        pr_err("ksu_typebounds: parent type '%s' not found\n", parent_name);
+        return false;
+    }
+
+    child = symtab_search(&db->p_types, child_name);
+    if (!child) {
+        pr_err("ksu_typebounds: child type '%s' not found\n", child_name);
+        return false;
+    }
+
+    child->bounds = parent->value;
+    pr_info("ksu_typebounds: '%s' bounded by '%s' (value=%u)\n",
+            child_name, parent_name, parent->value);
+    return true;
+}
+
 // Access vector rules
 bool ksu_allow(struct policydb *db, const char *src, const char *tgt,
                const char *cls, const char *perm)

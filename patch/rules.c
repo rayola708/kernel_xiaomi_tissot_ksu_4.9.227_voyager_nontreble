@@ -100,6 +100,7 @@ static int apply_kernelsu_rules_fn(void *ptr)
     ksu_typeattribute(db, KERNEL_SU_DOMAIN, "mlstrustedsubject");
     ksu_typeattribute(db, KERNEL_SU_DOMAIN, "netdomain");
     ksu_typeattribute(db, KERNEL_SU_DOMAIN, "bluetoothdomain");
+    ksu_typebounds(db, "init", KERNEL_SU_DOMAIN);
 
     // Create unconstrained file type
     ksu_type(db, KERNEL_SU_FILE, "file_type");
