@@ -48,10 +48,12 @@ jobs:
       - name: Patch KernelSU
         run: |
           echo "[+] Patching KernelSU SELinux for Android 10+ / Non Treble..."
-          curl -sLo KernelSU-Next/kernel/selinux/rules.c https://raw.githubusercontent.com/rahmatsobrian/kernel_xiaomi_tissot_ksu_4.9.227_voyager_nontreble/main/patch/rules.c
-          curl -sLo KernelSU-Next/kernel/selinux/sepolicy.c https://raw.githubusercontent.com/rahmatsobrian/kernel_xiaomi_tissot_ksu_4.9.227_voyager_nontreble/main/patch/sepolicy.c
-          curl -sLo KernelSU-Next/kernel/selinux/sepolicy.h https://raw.githubusercontent.com/rahmatsobrian/kernel_xiaomi_tissot_ksu_4.9.227_voyager_nontreble/main/patch/sepolicy.h
-
+          # curl -sLo KernelSU-Next/kernel/selinux/rules.c https://raw.githubusercontent.com/rahmatsobrian/kernel_xiaomi_tissot_ksu_4.9.227_voyager_nontreble/main/patch/rules.c
+          # curl -sLo KernelSU-Next/kernel/selinux/sepolicy.c https://raw.githubusercontent.com/rahmatsobrian/kernel_xiaomi_tissot_ksu_4.9.227_voyager_nontreble/main/patch/sepolicy.c
+          # curl -sLo KernelSU-Next/kernel/selinux/sepolicy.h https://raw.githubusercontent.com/rahmatsobrian/kernel_xiaomi_tissot_ksu_4.9.227_voyager_nontreble/main/patch/sepolicy.h
+          curl -sLo KernelSU-Next/kernel/selinux/selinux.c https://raw.githubusercontent.com/rahmatsobrian/kernel_xiaomi_tissot_ksu_4.9.227_voyager_nontreble/main/patch/selinux.c
+          curl -sLo KernelSU-Next/kernel/Kbuild https://raw.githubusercontent.com/rahmatsobrian/kernel_xiaomi_tissot_ksu_4.9.227_voyager_nontreble/main/patch/Kbuild
+                    
       - name: Notify Telegram - KernelSU Patch Applied
         run: |
           MSG="✅ *KernelSU SELinux Patch Applied Success*"
