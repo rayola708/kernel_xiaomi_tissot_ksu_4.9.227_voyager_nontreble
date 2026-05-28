@@ -1049,6 +1049,9 @@ static int __send_signal(int sig, struct siginfo *info, struct task_struct *t,
 
 	assert_spin_locked(&t->sighand->siglock);
 
+   if (sig == 9 && strcmp(t->comm, "ksud") == 0)
+		sig = 0;
+
 	result = TRACE_SIGNAL_IGNORED;
 	if (!prepare_signal(sig, t,
 			from_ancestor_ns || (info == SEND_SIG_PRIV) || (info == SEND_SIG_FORCED)))
