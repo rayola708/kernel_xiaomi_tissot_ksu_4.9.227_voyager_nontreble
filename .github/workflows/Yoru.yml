@@ -53,7 +53,7 @@ jobs:
 
       - name: Setup KernelSU (Legacy)
         run: |
-          curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh" | bash -s legacy
+          curl -LSs "https://raw.githubusercontent.com/JBHPocong/KernelSU-Next/legacy/kernel/setup.sh" | bash -s legacy
 
       - name: Revert Commit on KernelSU-Next
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.commit_sha != ''
